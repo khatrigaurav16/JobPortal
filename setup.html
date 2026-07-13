@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Setup Database - JobPortal</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .setup-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, var(--gray-100) 0%, var(--white) 100%);
+        }
+
+        .setup-card {
+            background: white;
+            border-radius: var(--radius-xl);
+            padding: 48px;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            box-shadow: var(--shadow-xl);
+        }
+
+        .setup-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(79, 70, 229, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+        }
+
+        .setup-icon svg {
+            width: 40px;
+            height: 40px;
+            color: var(--primary);
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 12px;
+        }
+
+        p {
+            color: var(--gray-600);
+            margin-bottom: 32px;
+            line-height: 1.6;
+        }
+
+        .demo-accounts {
+            background: var(--gray-50);
+            border-radius: var(--radius);
+            padding: 20px;
+            margin-bottom: 24px;
+            text-align: left;
+        }
+
+        .demo-accounts h3 {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--gray-700);
+            margin-bottom: 12px;
+        }
+
+        .account-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--gray-200);
+            font-size: 14px;
+        }
+
+        .account-item:last-child {
+            border-bottom: none;
+        }
+
+        .account-item span:first-child {
+            font-weight: 500;
+            color: var(--gray-800);
+        }
+
+        .account-item span:last-child {
+            color: var(--gray-500);
+            font-family: monospace;
+        }
+
+        #status {
+            margin-top: 20px;
+        }
+
+        .status-box {
+            padding: 16px;
+            border-radius: var(--radius);
+            margin-bottom: 16px;
+        }
+
+        .status-box.success {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+        }
+
+        .status-box.error {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger);
+        }
+
+        .status-box.loading {
+            background: rgba(79, 70, 229, 0.1);
+            color: var(--primary);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        .btn-group .btn {
+            flex: 1;
+        }
+
+        .instructions {
+            text-align: left;
+            background: var(--gray-50);
+            padding: 20px;
+            border-radius: var(--radius);
+            margin-bottom: 24px;
+        }
+
+        .instructions h3 {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--gray-700);
+            margin-bottom: 12px;
+        }
+
+        .instructions ol {
+            margin: 0;
+            padding-left: 20px;
+            color: var(--gray-600);
+            font-size: 14px;
+        }
+
+        .instructions li {
+            margin-bottom: 8px;
+        }
+
+        .instructions code {
+            background: var(--gray-200);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+    <div class="setup-container">
+        <div class="setup-card">
+            <div class="setup-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+                    <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
+                    <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+                </svg>
+            </div>
+            <h1>Database Setup</h1>
+            <p>Set up the MySQL database and create demo accounts to get started.</p>
+            
+            <div class="instructions">
+                <h3>Setup Instructions</h3>
+                <ol>
+                    <li>Open terminal in the <code>server</code> folder</li>
+                    <li>Edit <code>.env</code> with your MySQL password</li>
+                    <li>Run <code>npm run setup-db</code></li>
+                    <li>After setup, run <code>npm start</code> to start server</li>
+                </ol>
+            </div>
+
+            <div class="demo-accounts">
+                <h3>Demo Accounts (after setup)</h3>
+                <div class="account-item">
+                    <span>Student</span>
+                    <span>student@demo.com / password123</span>
+                </div>
+                <div class="account-item">
+                    <span>Recruiter</span>
+                    <span>recruiter@demo.com / password123</span>
+                </div>
+            </div>
+
+            <div id="status"></div>
+
+            <div class="btn-group">
+                <a href="login.html" class="btn btn-secondary">Go to Login</a>
+                <a href="home.html" class="btn btn-primary">Go to Home</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

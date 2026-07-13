@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recruiter Dashboard - JobPortal</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .dashboard-header { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); color: white; padding: 60px 0 100px; position: relative; }
+        .dashboard-header::after { content: ''; position: absolute; bottom: -30px; left: 0; right: 0; height: 60px; background: var(--gray-900); border-radius: 50% 50% 0 0; }
+        .dashboard-welcome { max-width: 1200px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+        .welcome-content { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
+        .welcome-text h1 { font-size: 32px; font-weight: 700; margin-bottom: 8px; }
+        .welcome-text p { font-size: 16px; opacity: 0.9; }
+        .profile-avatar { width: 80px; height: 80px; background: var(--white); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 32px; font-weight: 700; color: var(--primary); box-shadow: 0 10px 40px rgba(0,0,0,0.3); }
+        .dashboard-content { max-width: 1200px; margin: 0 auto; padding: 60px 24px; }
+        .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: -40px; position: relative; z-index: 2; }
+        .stat-card { background: var(--gray-800); border-radius: var(--radius-xl); padding: 24px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); border: 1px solid var(--gray-700); text-align: center; transition: all 0.3s ease; }
+        .stat-card:hover { transform: translateY(-4px); border-color: var(--primary); }
+        .stat-icon { width: 48px; height: 48px; border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; }
+        .stat-icon.blue { background: rgba(99, 102, 241, 0.15); color: var(--primary-light); }
+        .stat-icon.green { background: rgba(16, 185, 129, 0.15); color: var(--success); }
+        .stat-icon.yellow { background: rgba(245, 158, 11, 0.15); color: var(--warning); }
+        .stat-icon.red { background: rgba(239, 68, 68, 0.15); color: var(--danger); }
+        .stat-value { font-size: 28px; font-weight: 700; color: var(--white); margin-bottom: 4px; }
+        .stat-label { font-size: 14px; color: var(--gray-400); }
+        .action-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 48px; }
+        .action-card { background: var(--gray-800); border-radius: var(--radius-xl); padding: 32px; text-align: center; cursor: pointer; transition: all 0.3s ease; border: 2px solid var(--gray-700); }
+        .action-card:hover { border-color: var(--primary); transform: translateY(-4px); box-shadow: 0 10px 40px rgba(99, 102, 241, 0.15); }
+        .action-icon { width: 64px; height: 64px; background: rgba(99, 102, 241, 0.15); border-radius: var(--radius-xl); display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; color: var(--primary-light); }
+        .action-card h3 { font-size: 18px; font-weight: 600; color: var(--white); margin-bottom: 8px; }
+        .action-card p { font-size: 14px; color: var(--gray-400); }
+        .recent-section { margin-top: 48px; }
+        .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+        .section-title { font-size: 24px; font-weight: 700; color: var(--white); }
+        .job-list { display: flex; flex-direction: column; gap: 16px; }
+        .job-item { background: var(--gray-800); border-radius: var(--radius-xl); padding: 20px; display: flex; justify-content: space-between; align-items: center; border: 1px solid var(--gray-700); transition: all 0.2s ease; }
+        .job-item:hover { border-color: var(--primary); }
+        .job-info h4 { font-size: 16px; font-weight: 600; color: var(--white); margin-bottom: 4px; }
+        .job-info p { font-size: 14px; color: var(--gray-400); }
+        .job-meta { display: flex; gap: 12px; align-items: center; }
+        .applicant-count { background: var(--gray-700); padding: 6px 12px; border-radius: var(--radius-full); font-size: 13px; font-weight: 500; color: var(--gray-300); }
+        @media (max-width: 1024px) { .stats-row { grid-template-columns: repeat(2, 1fr); } .action-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 768px) { .stats-row { grid-template-columns: 1fr; } .action-grid { grid-template-columns: 1fr; } .welcome-content { flex-direction: column; text-align: center; } .job-item { flex-direction: column; gap: 12px; text-align: center; } }
+    </style>
+</head>
+<body>
+    <header class="nav-header">
+        <div class="nav-container">
+            <a href="home.html" class="nav-logo">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                <span class="text-gradient">JobPortal</span>
+            </a>
+            <nav class="nav-links">
+                <a href="recruiterdashboard.html" class="nav-link" style="color: var(--primary-light);">Dashboard</a>
+                <a href="addjob.html" class="nav-link">Post Jobs</a>
+                <a href="managejob.html" class="nav-link">Manage Jobs</a>
+                <a href="view-applicants.html" class="nav-link">Applicants</a>
+            </nav>
+            <div class="nav-actions">
+                <a href="home.html" class="btn btn-primary btn-sm" onclick="logout()">Logout</a>
+            </div>
+        </div>
+    </header>
+    <div class="page-wrapper">
+        <div class="dashboard-header">
+            <div class="dashboard-welcome">
+                <div class="welcome-content">
+                    <div class="welcome-text">
+                        <h1 id="welcomeTitle">Welcome, Recruiter!</h1>
+                        <p>Manage your job postings and find the best talent</p>
+                    </div>
+                    <div class="profile-avatar" id="avatar">R</div>
+                </div>
+            </div>
+        </div>
+        <div class="dashboard-content">
+            <div class="stats-row" id="statsRow">
+                <div class="stat-card">
+                    <div class="stat-icon blue"><i class="fas fa-briefcase"></i></div>
+                    <div class="stat-value" id="totalJobs">0</div>
+                    <div class="stat-label">Active Jobs</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon green"><i class="fas fa-users"></i></div>
+                    <div class="stat-value" id="totalApplicants">0</div>
+                    <div class="stat-label">Total Applicants</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon yellow"><i class="fas fa-clock"></i></div>
+                    <div class="stat-value" id="pendingReview">0</div>
+                    <div class="stat-label">Pending Review</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon red"><i class="fas fa-check-circle"></i></div>
+                    <div class="stat-value" id="shortlisted">0</div>
+                    <div class="stat-label">Shortlisted</div>
+                </div>
+            </div>
+            <div class="action-grid">
+                <div class="action-card" onclick="window.location.href='addjob.html'">
+                    <div class="action-icon"><i class="fas fa-plus-circle"></i></div>
+                    <h3>Post New Job</h3>
+                    <p>Create a new job listing</p>
+                </div>
+                <div class="action-card" onclick="window.location.href='managejob.html'">
+                    <div class="action-icon"><i class="fas fa-edit"></i></div>
+                    <h3>Manage Jobs</h3>
+                    <p>Edit or delete job listings</p>
+                </div>
+                <div class="action-card" onclick="window.location.href='view-applicants.html'">
+                    <div class="action-icon"><i class="fas fa-user-check"></i></div>
+                    <h3>View Applicants</h3>
+                    <p>Review and manage applications</p>
+                </div>
+            </div>
+            <div class="recent-section">
+                <div class="section-header">
+                    <h2 class="section-title">Your Recent Jobs</h2>
+                    <a href="managejob.html" class="btn btn-secondary btn-sm">View All</a>
+                </div>
+                <div class="job-list" id="recentJobs"></div>
+            </div>
+        </div>
+    </div>
+    <div class="toast" id="toast"></div>
+    <script>
+        function logout() {
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            window.location.href = 'login.html';
+        }
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = 'toast ' + type;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+        function checkAuth() {
+            const token = localStorage.getItem('token');
+            const user = JSON.parse(localStorage.getItem('user') || '{}');
+            
+            if (!token) {
+                window.location.href = 'login.html';
+                return false;
+            }
+            
+            if (user.user_type === 'student') {
+                window.location.href = 'student.html';
+                return false;
+            }
+            
+            return true;
+        }
+        async function loadDashboard() {
+            const user = JSON.parse(localStorage.getItem('user') || '{}');
+            
+            document.getElementById('welcomeTitle').textContent = `Welcome, ${user.name || 'Recruiter'}!`;
+            document.getElementById('avatar').textContent = (user.name || 'R').charAt(0).toUpperCase();
+            try {
+                const token = localStorage.getItem('token');
+                
+                const [jobsResponse, appsResponse] = await Promise.all([
+                    fetch('/api/jobs/my-jobs', { headers: { 'Authorization': `Bearer ${token}` } }),
+                    fetch('/api/applications/all', { headers: { 'Authorization': `Bearer ${token}` } })
+                ]);
+                
+                const jobsData = await jobsResponse.json();
+                const appsData = await appsResponse.json();
+                
+                const jobs = jobsData.success ? jobsData.data : [];
+                const applications = appsData.success ? appsData.data : [];
+                
+                document.getElementById('totalJobs').textContent = jobs.filter(j => j.status === 'active').length;
+                document.getElementById('totalApplicants').textContent = applications.length;
+                document.getElementById('pendingReview').textContent = applications.filter(a => a.status === 'pending' || a.status === 'under_review').length;
+                document.getElementById('shortlisted').textContent = applications.filter(a => a.status === 'accepted').length;
+                const recentSection = document.getElementById('recentJobs');
+                const recentJobs = jobs.slice(0, 3);
+                if (recentJobs.length === 0) {
+                    recentSection.innerHTML = `
+                        <div class="empty-state" style="background: var(--gray-800); border-radius: var(--radius-xl); padding: 40px; text-align: center; border: 1px solid var(--gray-700);">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--gray-600); margin: 0 auto 20px;">
+                                <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                            </svg>
+                            <h3 style="color: var(--white); margin-bottom: 8px;">No jobs posted yet</h3>
+                            <p style="color: var(--gray-400); margin-bottom: 20px;">Start by posting your first job listing</p>
+                            <a href="addjob.html" class="btn btn-primary"><i class="fas fa-plus"></i> Post a Job</a>
+                        </div>
+                    `;
+                } else {
+                    recentSection.innerHTML = recentJobs.map(job => `
+                        <div class="job-item">
+                            <div class="job-info">
+                                <h4>${job.title}</h4>
+                                <p>${job.company} • ${job.location} • ${job.salary}</p>
+                            </div>
+                            <div class="job-meta">
+                                <span class="applicant-count"><i class="fas fa-users" style="margin-right: 4px;"></i> ${job.application_count || 0}</span>
+                            </div>
+                        </div>
+                    `).join('');
+                }
+            } catch (error) {
+                console.error('Error loading dashboard:', error);
+                showToast('Failed to load dashboard data', 'error');
+            }
+        }
+        if (checkAuth()) {
+            window.addEventListener('DOMContentLoaded', loadDashboard);
+        }
+    </script>
+</body>
+</html>

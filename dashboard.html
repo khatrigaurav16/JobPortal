@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Applications - JobPortal</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .page-header {
+            background: linear-gradient(135deg, var(--gray-900) 0%, var(--primary-dark) 100%);
+            padding: 40px 0;
+            color: white;
+        }
+
+        .page-header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .page-header p {
+            opacity: 0.8;
+        }
+
+        .filter-tabs {
+            display: flex;
+            gap: 8px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .filter-tab {
+            padding: 8px 16px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            border-radius: var(--radius);
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .filter-tab:hover, .filter-tab.active {
+            background: white;
+            color: var(--primary);
+        }
+
+        .content-area {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 24px;
+        }
+
+        .applications-grid {
+            display: grid;
+            gap: 20px;
+        }
+
+        .application-card {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .application-card:hover {
+            box-shadow: var(--shadow-lg);
+        }
+
+        .application-header {
+            padding: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 20px;
+            border-bottom: 1px solid var(--gray-100);
+        }
+
+        .application-info h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--gray-900);
+            margin-bottom: 4px;
+        }
+
+        .company-name {
+            font-size: 14px;
+            color: var(--gray-600);
+            margin-bottom: 12px;
+        }
+
+        .application-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            color: var(--gray-600);
+        }
+
+        .meta-item svg {
+            width: 16px;
+            height: 16px;
+            color: var(--gray-400);
+        }
+
+        .status-badge {
+            padding: 8px 16px;
+            border-radius: var(--radius-full);
+            font-size: 13px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .status-badge.pending {
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--warning);
+        }
+
+        .status-badge.accepted {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+        }
+
+        .status-badge.rejected {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger);
+        }
+
+        .status-badge.review {
+            background: rgba(79, 70, 229, 0.1);
+            color: var(--primary);
+        }
+
+        .application-body {
+            padding: 20px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .applied-date {
+            font-size: 13px;
+            color: var(--gray-500);
+        }
+
+        .application-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        @media (max-width: 768px) {
+            .application-header {
+                flex-direction: column;
+            }
+
+            .application-body {
+                flex-direction: column;
+                gap: 12px;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="nav-header">
+        <div class="nav-container">
+            <a href="home.html" class="nav-logo">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                    <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                </svg>
+                JobPortal
+            </a>
+            <nav class="nav-links">
+                <a href="student.html" class="nav-link">Dashboard</a>
+                <a href="joblisting.html" class="nav-link">Browse Jobs</a>
+                <a href="dashboard.html" class="nav-link" style="color: var(--primary);">My Applications</a>
+            </nav>
+            <div class="nav-actions">
+                <a href="student.html" class="btn btn-secondary btn-sm">Dashboard</a>
+                <a href="home.html" class="btn btn-primary btn-sm">Logout</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="page-wrapper">
+        <div class="page-header">
+            <div class="container">
+                <h1>My Applications</h1>
+                <p>Track your job applications and their status</p>
+                <div class="filter-tabs">
+                    <button class="filter-tab active" data-filter="all">All</button>
+                    <button class="filter-tab" data-filter="Under Review">Pending</button>
+                    <button class="filter-tab" data-filter="Accepted">Accepted</button>
+                    <button class="filter-tab" data-filter="Rejected">Rejected</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-area">
+            <div class="applications-grid" id="applicationsGrid"></div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+        let applications = [];
+        let studentProfile = {};
+        let currentFilter = 'all';
+
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = 'toast ' + type;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        function loadApplications() {
+            studentProfile = JSON.parse(localStorage.getItem('studentProfile') || '{}');
+            applications = JSON.parse(localStorage.getItem('applications') || '[]');
+            
+            const userEmail = studentProfile.email;
+            applications = applications.filter(app => 
+                app.studentEmail === userEmail || app.studentEmail === userEmail
+            );
+            
+            renderApplications();
+        }
+
+        function renderApplications() {
+            const grid = document.getElementById('applicationsGrid');
+            
+            let filtered = applications;
+            if (currentFilter !== 'all') {
+                filtered = applications.filter(app => app.status === currentFilter);
+            }
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state" style="background: white; border-radius: var(--radius-lg); padding: 60px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--gray-300);">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                        </svg>
+                        <h3>No applications found</h3>
+                        <p>${currentFilter === 'all' ? 'Start applying to jobs to see your applications here' : 'No applications with this status'}</p>
+                        <a href="joblisting.html" class="btn btn-primary" style="margin-top: 16px;">Browse Jobs</a>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = filtered.map((app, index) => {
+                const statusClass = app.status ? app.status.toLowerCase().replace(' ', '-') : 'pending';
+                const appliedDate = new Date(app.appliedAt).toLocaleDateString('en-IN', {
+                    day: 'numeric',
+                    month: 'short',
+                    year: 'numeric'
+                });
+
+                return `
+                    <div class="application-card">
+                        <div class="application-header">
+                            <div class="application-info">
+                                <h3>${app.jobTitle}</h3>
+                                <p class="company-name">${app.company}</p>
+                                <div class="application-meta">
+                                    <span class="meta-item">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                            <circle cx="12" cy="10" r="3"></circle>
+                                        </svg>
+                                        ${app.location || 'Location not specified'}
+                                    </span>
+                                    <span class="meta-item">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <line x1="12" y1="1" x2="12" y2="23"></line>
+                                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                                        </svg>
+                                        ${app.salary || 'Salary not specified'}
+                                    </span>
+                                </div>
+                            </div>
+                            <span class="status-badge ${statusClass}">${app.status || 'Under Review'}</span>
+                        </div>
+                        <div class="application-body">
+                            <span class="applied-date">Applied on ${appliedDate}</span>
+                            <div class="application-actions">
+                                ${app.resumeData ? `<button class="btn btn-secondary btn-sm" onclick="viewResume('${app.resumeData}')">View Resume</button>` : ''}
+                                <button class="btn btn-danger btn-sm" onclick="withdrawApplication(${index})">Withdraw</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function withdrawApplication(index) {
+            if (confirm('Are you sure you want to withdraw this application?')) {
+                const allApplications = JSON.parse(localStorage.getItem('applications') || '[]');
+                const userEmail = studentProfile.email;
+                
+                const appToRemove = allApplications.find(app => 
+                    (app.studentEmail === userEmail || app.studentEmail === userEmail) &&
+                    app.jobTitle === applications[index].jobTitle &&
+                    app.company === applications[index].company
+                );
+                
+                if (appToRemove) {
+                    const removeIndex = allApplications.indexOf(appToRemove);
+                    allApplications.splice(removeIndex, 1);
+                    localStorage.setItem('applications', JSON.stringify(allApplications));
+                    showToast('Application withdrawn successfully');
+                    loadApplications();
+                }
+            }
+        }
+
+        function viewResume(dataUrl) {
+            if (!dataUrl || !dataUrl.startsWith('data:')) {
+                showToast('Resume not available', 'error');
+                return;
+            }
+            const newTab = window.open();
+            newTab.document.write(`<iframe src="${dataUrl}" width="100%" height="100%"></iframe>`);
+        }
+
+        document.querySelectorAll('.filter-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+                currentFilter = this.dataset.filter;
+                renderApplications();
+            });
+        });
+
+        window.addEventListener('DOMContentLoaded', loadApplications);
+    </script>
+</body>
+</html>

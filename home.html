@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JobPortal - Your Gateway to Success</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header class="nav-header">
+        <div class="nav-container">
+            <a href="home.html" class="nav-logo">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                    <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                </svg>
+                <span class="text-gradient">JobPortal</span>
+            </a>
+            <nav class="nav-links">
+                <a href="#features" class="nav-link">Features</a>
+                <a href="#stats" class="nav-link">Statistics</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </nav>
+            <div class="nav-actions">
+                <a href="login.html" class="btn btn-secondary">Login</a>
+                <a href="register.html" class="btn btn-primary">Get Started</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="page-wrapper">
+        <section class="hero-section">
+            <div class="hero-bg-animation">
+                <div class="hero-glow hero-glow-1"></div>
+                <div class="hero-glow hero-glow-2"></div>
+                <div class="floating-code" style="left: 10%; animation-delay: 0s;">const job = await findJob();</div>
+                <div class="floating-code" style="left: 20%; animation-delay: 3s;">if (talent.meets(requirement))</div>
+                <div class="floating-code" style="left: 40%; animation-delay: 6s;">.then(career => career.grow())</div>
+                <div class="floating-code" style="left: 60%; animation-delay: 9s;">while(!dreamJob.found)</div>
+                <div class="floating-code" style="left: 75%; animation-delay: 12s;">export default Success;</div>
+                <div class="floating-code" style="left: 85%; animation-delay: 15s;">async function hireBest()</div>
+            </div>
+            <div class="container">
+                <div class="hero-content">
+                    <h1 class="hero-title">
+                        Find Your <span class="typing-text">Dream Job</span> Today
+                    </h1>
+                    <p class="hero-subtitle">
+                        Connect with top companies and discover thousands of opportunities that match your skills and career goals.
+                    </p>
+                    <div class="search-box">
+                        <input type="text" id="searchInput" placeholder="Search job titles, companies, or keywords...">
+                        <select class="form-select search-select" id="locationSelect">
+                            <option value="">All Locations</option>
+                            <option value="Mumbai">Mumbai</option>
+                            <option value="Delhi">Delhi</option>
+                            <option value="Bangalore">Bangalore</option>
+                            <option value="Hyderabad">Hyderabad</option>
+                            <option value="Pune">Pune</option>
+                            <option value="Chennai">Chennai</option>
+                        </select>
+                        <button class="btn btn-primary" id="searchBtn">
+                            <i class="fas fa-search"></i>
+                            Search Jobs
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="stats-section" id="stats">
+            <div class="container">
+                <div class="stats-grid">
+                    <div class="stat-card scroll-animate">
+                        <div class="stat-icon">
+                            <i class="fas fa-briefcase"></i>
+                        </div>
+                        <div class="stat-number" id="jobsCount">0</div>
+                        <div class="stat-label">Active Jobs</div>
+                    </div>
+                    <div class="stat-card scroll-animate" style="transition-delay: 0.1s;">
+                        <div class="stat-icon">
+                            <i class="fas fa-building"></i>
+                        </div>
+                        <div class="stat-number" id="companiesCount">0</div>
+                        <div class="stat-label">Companies</div>
+                    </div>
+                    <div class="stat-card scroll-animate" style="transition-delay: 0.2s;">
+                        <div class="stat-icon">
+                            <i class="fas fa-user-graduate"></i>
+                        </div>
+                        <div class="stat-number" id="seekersCount">0</div>
+                        <div class="stat-label">Job Seekers</div>
+                    </div>
+                    <div class="stat-card scroll-animate" style="transition-delay: 0.3s;">
+                        <div class="stat-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="stat-number" id="successRate">0%</div>
+                        <div class="stat-label">Success Rate</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="features-section" id="features">
+            <div class="container">
+                <div class="section-title scroll-animate">
+                    <h2>Why Choose <span class="text-gradient">JobPortal?</span></h2>
+                    <p>Everything you need to advance your career in one powerful platform</p>
+                </div>
+                <div class="features-grid">
+                    <div class="feature-card scroll-animate" style="transition-delay: 0s;">
+                        <div class="feature-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <h3>Smart Job Matching</h3>
+                        <p>Our AI-powered algorithm matches your skills with the perfect job opportunities.</p>
+                    </div>
+                    <div class="feature-card scroll-animate" style="transition-delay: 0.1s;">
+                        <div class="feature-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3>Direct Connection</h3>
+                        <p>Connect directly with recruiters and hiring managers without middlemen.</p>
+                    </div>
+                    <div class="feature-card scroll-animate" style="transition-delay: 0.2s;">
+                        <div class="feature-icon">
+                            <i class="fas fa-user-edit"></i>
+                        </div>
+                        <h3>Build Your Profile</h3>
+                        <p>Create a professional profile and upload your resume to stand out.</p>
+                    </div>
+                    <div class="feature-card scroll-animate" style="transition-delay: 0.3s;">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3>Application Tracking</h3>
+                        <p>Track your applications in real-time and get status updates instantly.</p>
+                    </div>
+                    <div class="feature-card scroll-animate" style="transition-delay: 0.4s;">
+                        <div class="feature-icon">
+                            <i class="fas fa-filter"></i>
+                        </div>
+                        <h3>Advanced Filters</h3>
+                        <p>Filter jobs by location, salary, experience, and more to find your perfect match.</p>
+                    </div>
+                    <div class="feature-card scroll-animate" style="transition-delay: 0.5s;">
+                        <div class="feature-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3>Secure & Private</h3>
+                        <p>Your data is protected with enterprise-grade security and privacy controls.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-section">
+            <div class="cta-glow"></div>
+            <div class="container">
+                <div style="position: relative; z-index: 1; text-align: center;">
+                    <h2 style="font-size: 36px; font-weight: 700; margin-bottom: 16px; color: white;" class="scroll-animate">
+                        Ready to Take the <span class="text-gradient">Next Step?</span>
+                    </h2>
+                    <p style="font-size: 18px; opacity: 0.9; margin-bottom: 32px; max-width: 600px; margin-left: auto; margin-right: auto; color: rgba(255,255,255,0.9);" class="scroll-animate">
+                        Join thousands of job seekers who have found their dream careers through JobPortal.
+                    </p>
+                    <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;" class="scroll-animate">
+                        <a href="register.html" class="btn btn-lg" style="background: white; color: var(--primary); box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
+                            <i class="fas fa-rocket"></i> Create Account
+                        </a>
+                        <a href="login.html" class="btn btn-lg" style="background: transparent; color: white; border: 2px solid white;">
+                            <i class="fas fa-sign-in-alt"></i> Login
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-grid">
+                    <div>
+                        <div class="nav-logo" style="margin-bottom: 16px; color: white;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                            </svg>
+                            <span class="text-gradient">JobPortal</span>
+                        </div>
+                        <p style="color: var(--gray-400); font-size: 14px; line-height: 1.6; margin-bottom: 20px;">
+                            Connecting talent with opportunities. Your journey to career success starts here.
+                        </p>
+                        <div class="social-links">
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="#"><i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                    <div id="contact">
+                        <h4 class="footer-title">Contact Us</h4>
+                        <p><i class="fas fa-envelope"></i> support@jobportal.com</p>
+                        <p><i class="fas fa-phone"></i> +91 98765 43210</p>
+                    </div>
+                    <div>
+                        <h4 class="footer-title">Quick Links</h4>
+                        <p><a href="login.html"><i class="fas fa-chevron-right"></i> Login</a></p>
+                        <p><a href="register.html"><i class="fas fa-chevron-right"></i> Register</a></p>
+                        <p><a href="joblisting.html"><i class="fas fa-chevron-right"></i> Browse Jobs</a></p>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <p>&copy; 2026 JobPortal. All rights reserved. Built with <i class="fas fa-heart" style="color: #ef4444;"></i></p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        document.getElementById('searchBtn').addEventListener('click', function() {
+            const search = document.getElementById('searchInput').value;
+            const location = document.getElementById('locationSelect').value;
+            window.location.href = 'joblisting.html' + (search || location ? '?' + new URLSearchParams({search, location}).toString() : '');
+        });
+
+        async function loadStats() {
+            try {
+                const response = await fetch('/api/jobs');
+                const data = await response.json();
+                
+                let jobsCount = 0;
+                if (data.success && data.data) {
+                    if (data.data.pagination) {
+                        jobsCount = data.data.pagination.total || 0;
+                    } else if (Array.isArray(data.data)) {
+                        jobsCount = data.data.length || 0;
+                    }
+                }
+                
+                animateCounter(document.getElementById('jobsCount'), 0, jobsCount, 2000);
+                animateCounter(document.getElementById('companiesCount'), 0, 127, 2000);
+                animateCounter(document.getElementById('seekersCount'), 0, 3420, 2000);
+                
+                const successRateEl = document.getElementById('successRate');
+                let currentRate = 0;
+                const targetRate = 94;
+                const duration = 2000;
+                const startTime = performance.now();
+                
+                function animateRate(currentTime) {
+                    const elapsed = currentTime - startTime;
+                    const progress = Math.min(elapsed / duration, 1);
+                    const easeProgress = 1 - Math.pow(1 - progress, 3);
+                    currentRate = Math.round(targetRate * easeProgress);
+                    successRateEl.textContent = currentRate + '%';
+                    
+                    if (progress < 1) {
+                        requestAnimationFrame(animateRate);
+                    }
+                }
+                
+                requestAnimationFrame(animateRate);
+            } catch (error) {
+                document.getElementById('jobsCount').textContent = '50+';
+                document.getElementById('companiesCount').textContent = '127';
+                document.getElementById('seekersCount').textContent = '3420';
+                document.getElementById('successRate').textContent = '94%';
+            }
+        }
+
+        function animateCounter(element, start, end, duration) {
+            const range = end - start;
+            const startTime = performance.now();
+            
+            function update(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const easeProgress = 1 - Math.pow(1 - progress, 3);
+                const current = Math.round(start + range * easeProgress);
+                element.textContent = current + '+';
+                
+                if (progress < 1) {
+                    requestAnimationFrame(update);
+                }
+            }
+            
+            requestAnimationFrame(update);
+        }
+
+        loadStats();
+
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.scroll-animate, .scroll-animate-left, .scroll-animate-right').forEach(el => {
+            observer.observe(el);
+        });
+
+        const typingTexts = ['Dream Job', 'Perfect Career', 'Next Opportunity', 'Future Success'];
+        let textIndex = 0;
+        const typingElement = document.querySelector('.typing-text');
+
+        function typeText() {
+            const currentText = typingTexts[textIndex];
+            let charIndex = 0;
+            typingElement.style.opacity = '1';
+            
+            function type() {
+                if (charIndex < currentText.length) {
+                    typingElement.textContent = currentText.slice(0, charIndex + 1);
+                    charIndex++;
+                    setTimeout(type, 100);
+                } else {
+                    setTimeout(eraseText, 2000);
+                }
+            }
+            
+            function eraseText() {
+                if (charIndex > 0) {
+                    typingElement.textContent = currentText.slice(0, charIndex - 1);
+                    charIndex--;
+                    setTimeout(eraseText, 50);
+                } else {
+                    textIndex = (textIndex + 1) % typingTexts.length;
+                    setTimeout(typeText, 500);
+                }
+            }
+            
+            type();
+        }
+
+        setTimeout(typeText, 1000);
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

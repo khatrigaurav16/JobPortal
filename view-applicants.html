@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Applicants - JobPortal</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .page-header { background: linear-gradient(135deg, var(--gray-900) 0%, var(--primary-dark) 100%); padding: 40px 0; color: white; }
+        .page-header h1 { font-size: 28px; font-weight: 700; margin-bottom: 8px; }
+        .page-header p { opacity: 0.8; }
+        .filter-bar { display: flex; gap: 12px; margin-top: 20px; flex-wrap: wrap; }
+        .filter-btn { padding: 8px 16px; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); color: white; border-radius: var(--radius); font-size: 14px; cursor: pointer; transition: all 0.2s ease; }
+        .filter-btn:hover, .filter-btn.active { background: white; color: var(--primary); }
+        .content-area { max-width: 1200px; margin: 0 auto; padding: 40px 24px; }
+        .applicants-grid { display: grid; gap: 20px; }
+        .applicant-card { background: var(--gray-800); border-radius: var(--radius-xl); border: 1px solid var(--gray-700); overflow: hidden; transition: all 0.3s ease; }
+        .applicant-card:hover { border-color: var(--primary); box-shadow: 0 10px 40px rgba(99, 102, 241, 0.15); }
+        .applicant-header { padding: 24px; display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; }
+        .applicant-info { display: flex; gap: 16px; }
+        .applicant-avatar { width: 56px; height: 56px; background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%); border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 700; color: white; flex-shrink: 0; }
+        .applicant-details h3 { font-size: 18px; font-weight: 600; color: var(--white); margin-bottom: 4px; }
+        .applicant-meta { display: flex; flex-wrap: wrap; gap: 16px; font-size: 13px; color: var(--gray-400); }
+        .applicant-meta span { display: flex; align-items: center; gap: 4px; }
+        .applicant-meta i { color: var(--gray-500); }
+        .status-select { padding: 8px 12px; border: 1px solid var(--gray-600); border-radius: var(--radius); font-size: 13px; background: var(--gray-700); color: var(--white); cursor: pointer; min-width: 140px; }
+        .status-select:focus { outline: none; border-color: var(--primary); }
+        .applicant-body { padding: 0 24px 24px; }
+        .applicant-skills { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+        .skill-tag { padding: 4px 10px; background: var(--gray-700); border-radius: var(--radius-full); font-size: 12px; color: var(--gray-300); }
+        .applicant-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+        .job-filter { background: var(--gray-800); padding: 16px; border-radius: var(--radius-xl); margin-bottom: 24px; border: 1px solid var(--gray-700); }
+        .job-filter select { width: 100%; padding: 10px 14px; border: 1px solid var(--gray-600); border-radius: var(--radius); font-size: 14px; background: var(--gray-700); color: var(--white); }
+        .job-filter select:focus { outline: none; border-color: var(--primary); }
+        .job-info-bar { background: var(--gray-700); padding: 16px 20px; border-radius: var(--radius-lg); margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center; }
+        .job-info-bar h3 { color: var(--white); font-size: 16px; }
+        .job-info-bar span { color: var(--gray-400); font-size: 14px; }
+        @media (max-width: 768px) { .applicant-header { flex-direction: column; } .applicant-info { flex-direction: column; } .status-select { width: 100%; } }
+    </style>
+</head>
+<body>
+    <header class="nav-header">
+        <div class="nav-container">
+            <a href="home.html" class="nav-logo">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                <span class="text-gradient">JobPortal</span>
+            </a>
+            <nav class="nav-links">
+                <a href="recruiterdashboard.html" class="nav-link">Dashboard</a>
+                <a href="addjob.html" class="nav-link">Post Jobs</a>
+                <a href="managejob.html" class="nav-link">Manage Jobs</a>
+                <a href="view-applicants.html" class="nav-link" style="color: var(--primary-light);">Applicants</a>
+            </nav>
+            <div class="nav-actions">
+                <a href="recruiterdashboard.html" class="btn btn-secondary btn-sm">Back</a>
+            </div>
+        </div>
+    </header>
+    <div class="page-wrapper">
+        <div class="page-header">
+            <div class="container">
+                <h1><i class="fas fa-users"></i> View Applicants</h1>
+                <p>Review and manage job applications</p>
+                <div class="filter-bar">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="under_review">Pending</button>
+                    <button class="filter-btn" data-filter="accepted">Accepted</button>
+                    <button class="filter-btn" data-filter="rejected">Rejected</button>
+                </div>
+            </div>
+        </div>
+        <div class="content-area">
+            <div class="job-filter">
+                <select id="jobFilter" class="form-select">
+                    <option value="">All Jobs</option>
+                </select>
+            </div>
+            <div id="statsBar" class="job-info-bar" style="display: none;">
+                <h3 id="statsTitle">All Applicants</h3>
+                <span id="statsCount">0 total</span>
+            </div>
+            <div class="applicants-grid" id="applicantsGrid"></div>
+        </div>
+    </div>
+    <div class="toast" id="toast"></div>
+    <script>
+        let applicants = [];
+        let jobs = [];
+        let currentFilter = 'all';
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = 'toast ' + type;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+        function checkAuth() {
+            const token = localStorage.getItem('token');
+            const user = JSON.parse(localStorage.getItem('user') || '{}');
+            
+            if (!token) {
+                window.location.href = 'login.html';
+                return false;
+            }
+            
+            if (user.user_type === 'student') {
+                window.location.href = 'student.html';
+                return false;
+            }
+            
+            return true;
+        }
+        async function loadData() {
+            try {
+                const token = localStorage.getItem('token');
+                
+                const [appsResponse, jobsResponse] = await Promise.all([
+                    fetch('/api/applications/all', { headers: { 'Authorization': `Bearer ${token}` } }),
+                    fetch('/api/jobs/my-jobs', { headers: { 'Authorization': `Bearer ${token}` } })
+                ]);
+                
+                const appsData = await appsResponse.json();
+                const jobsData = await jobsResponse.json();
+                
+                if (appsData.success) applicants = appsData.data;
+                if (jobsData.success) jobs = jobsData.data;
+                
+                populateJobFilter();
+                renderApplicants();
+                updateStats();
+            } catch (error) {
+                console.error('Error loading data:', error);
+                showToast('Failed to load applicants', 'error');
+            }
+        }
+        function populateJobFilter() {
+            const jobFilter = document.getElementById('jobFilter');
+            const uniqueJobs = [...new Set(applicants.map(app => app.job_id))];
+            
+            let options = '<option value="">All Jobs</option>';
+            jobs.forEach(job => {
+                if (uniqueJobs.includes(job.id)) {
+                    options += `<option value="${job.id}">${job.title} (${job.company})</option>`;
+                }
+            });
+            
+            jobFilter.innerHTML = options;
+            
+            const urlParams = new URLSearchParams(window.location.search);
+            const jobId = urlParams.get('jobId');
+            if (jobId) jobFilter.value = jobId;
+        }
+        function updateStats() {
+            const statsBar = document.getElementById('statsBar');
+            const statsTitle = document.getElementById('statsTitle');
+            const statsCount = document.getElementById('statsCount');
+            
+            const jobFilter = document.getElementById('jobFilter').value;
+            let filtered = applicants;
+            
+            if (jobFilter) {
+                filtered = applicants.filter(app => app.job_id == jobFilter);
+                const job = jobs.find(j => j.id == jobFilter);
+                if (job) {
+                    statsBar.style.display = 'flex';
+                    statsTitle.textContent = job.title;
+                    statsCount.textContent = `${filtered.length} applicant${filtered.length !== 1 ? 's' : ''}`;
+                }
+            } else {
+                statsBar.style.display = 'none';
+            }
+        }
+        function renderApplicants() {
+            const grid = document.getElementById('applicantsGrid');
+            const jobFilter = document.getElementById('jobFilter').value;
+            
+            let filtered = applicants.filter(app => {
+                const matchesFilter = currentFilter === 'all' || app.status === currentFilter;
+                const matchesJob = !jobFilter || app.job_id == jobFilter;
+                return matchesFilter && matchesJob;
+            });
+            if (filtered.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state" style="background: var(--gray-800); border-radius: var(--radius-xl); padding: 60px; text-align: center; border: 1px solid var(--gray-700);">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--gray-600); margin: 0 auto 20px;">
+                            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                        </svg>
+                        <h3 style="color: var(--white); margin-bottom: 8px;">No applicants found</h3>
+                        <p style="color: var(--gray-400);">Try adjusting your filters</p>
+                    </div>
+                `;
+                return;
+            }
+            grid.innerHTML = filtered.map(app => {
+                const initials = app.name ? app.name.split(' ').map(n => n[0]).join('').substring(0, 2) : 'AP';
+                const statusOptions = [
+                    { value: 'pending', label: 'Pending' },
+                    { value: 'under_review', label: 'Under Review' },
+                    { value: 'accepted', label: 'Accepted' },
+                    { value: 'rejected', label: 'Rejected' }
+                ];
+                
+                return `
+                    <div class="applicant-card">
+                        <div class="applicant-header">
+                            <div class="applicant-info">
+                                <div class="applicant-avatar">${initials}</div>
+                                <div class="applicant-details">
+                                    <h3>${app.name || 'Applicant'}</h3>
+                                    <div class="applicant-meta">
+                                        <span><i class="fas fa-envelope"></i> ${app.email}</span>
+                                        <span><i class="fas fa-phone"></i> ${app.phone || 'N/A'}</span>
+                                        <span><i class="fas fa-graduation-cap"></i> ${app.qualification || 'N/A'} ${app.branch || ''}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <select class="status-select" onchange="updateStatus('${app.id}', this.value)">
+                                ${statusOptions.map(opt => `
+                                    <option value="${opt.value}" ${app.status === opt.value ? 'selected' : ''}>${opt.label}</option>
+                                `).join('')}
+                            </select>
+                        </div>
+                        <div class="applicant-body">
+                            <div class="applicant-skills">
+                                ${app.skills ? app.skills.split(',').map(s => `<span class="skill-tag">${s.trim()}</span>`).join('') : '<span class="skill-tag">No skills listed</span>'}
+                            </div>
+                            <div class="applicant-actions">
+                                ${app.resume_path ? `<a href="${app.resume_path}" target="_blank" class="btn btn-secondary btn-sm"><i class="fas fa-file-pdf"></i> View Resume</a>` : ''}
+                                <button class="btn btn-danger btn-sm" onclick="deleteApplicant('${app.id}')"><i class="fas fa-trash"></i> Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+        async function updateStatus(applicantId, status) {
+            try {
+                const token = localStorage.getItem('token');
+                const response = await fetch(`/api/applications/${applicantId}/status`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ status })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    const app = applicants.find(a => a.id == applicantId);
+                    if (app) app.status = status;
+                    showToast('Status updated successfully!');
+                    renderApplicants();
+                } else {
+                    showToast(data.message || 'Failed to update status', 'error');
+                    renderApplicants();
+                }
+            } catch (error) {
+                console.error('Error updating status:', error);
+                showToast('Failed to update status', 'error');
+                renderApplicants();
+            }
+        }
+        async function deleteApplicant(applicantId) {
+            if (!confirm('Are you sure you want to delete this application?')) return;
+            
+            try {
+                const token = localStorage.getItem('token');
+                const response = await fetch(`/api/applications/${applicantId}`, {
+                    method: 'DELETE',
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    applicants = applicants.filter(a => a.id != applicantId);
+                    renderApplicants();
+                    updateStats();
+                    showToast('Application deleted');
+                } else {
+                    showToast(data.message || 'Failed to delete application', 'error');
+                }
+            } catch (error) {
+                console.error('Error deleting application:', error);
+                showToast('Failed to delete application', 'error');
+            }
+        }
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                currentFilter = this.dataset.filter;
+                renderApplicants();
+            });
+        });
+        document.getElementById('jobFilter').addEventListener('change', function() {
+            renderApplicants();
+            updateStats();
+        });
+        if (checkAuth()) {
+            window.addEventListener('DOMContentLoaded', loadData);
+        }
+    </script>
+</body>
+</html>
