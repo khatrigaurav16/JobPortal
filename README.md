@@ -289,9 +289,6 @@ Run locally using `npm start` in the server directory.
 
 This project is open source and available under the MIT License.
 
-## Author
-
-Your Name - [Your GitHub](link)
 
 ## Acknowledgments
 
